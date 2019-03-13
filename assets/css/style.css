@@ -1,0 +1,23 @@
+header {
+    color: blueviolet;
+    font-size: 20pt;
+    margin-left: 30pt;
+    margin-top: 20pt;
+}
+
+#startBtn {
+    background: blueviolet;
+    border: gray;
+    margin-left: 40pt;
+    margin-top: 20pt;
+}
+
+#timer {
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+}
+
+#choices {
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+}
