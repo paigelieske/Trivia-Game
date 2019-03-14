@@ -1,32 +1,32 @@
 $(document).ready(function () {
 
-var time = 15;
+    var time = 15;
 
-var game = [{
-    question: "Where do the Flintstones live?",
-    options: ["Royal Woods", "Jump City", "Flint", "Bedrock"],
-    answer: 3
-}, {
-    question: "What is the capital of Indiana?",
-    options: ["Boston", "Atlanta", "Indianapolis", "Springfield"],
-    answer: 2
-}, {
-    question: "Who shot Abraham Lincoln?",
-    options: ["Donald Trump", "John Wilkes Booth", "Robert E. Lee", "Mary Todd Lincoln"],
-    answer: 1
-}, {
-    question: "Who wrote To Kill A Mockingbird",
-    options: ["Harper Lee", "J.K. Rowling", "Truman Capote", "S.E. Hinton"],
-    answer: 0
-}];
+    var game = [{
+        question: "Where do the Flintstones live?",
+        options: ["Royal Woods", "Jump City", "Flint", "Bedrock"],
+        answer: 3
+    }, {
+        question: "What is the capital of Indiana?",
+        options: ["Boston", "Atlanta", "Indianapolis", "Springfield"],
+        answer: 2
+    }, {
+        question: "Who shot Abraham Lincoln?",
+        options: ["Donald Trump", "John Wilkes Booth", "Robert E. Lee", "Mary Todd Lincoln"],
+        answer: 1
+    }, {
+        question: "Who wrote To Kill A Mockingbird",
+        options: ["Harper Lee", "J.K. Rowling", "Truman Capote", "S.E. Hinton"],
+        answer: 0
+    }];
 
-var questionNum = 0;
-var userChoice;
-var correct = 0;
-var incorrect = 0;
-var unanswered = 0;
-var answered = false;
-var intervalId;
+    var questionNum = 0;
+    var userChoice;
+    var correct = 0;
+    var incorrect = 0;
+    var unanswered = 0;
+    var answered = false;
+    var intervalId;
 
     $("#startBtn").on("click", start);
 
@@ -34,7 +34,7 @@ var intervalId;
         $("#startBtn").hide();
         $("#timer").text("Time Remaining: " + time);
         timer();
-    };
+    }
 
     function timer() {
         clearInterval(intervalId);
@@ -48,6 +48,14 @@ var intervalId;
         }, 1000);
         questions();
     }
+
+    // function reset () {
+    //     clearInterval(intervalId);
+    //     intervalId = setInterval(function () {
+    //         time--
+    //     })
+    //     questions();
+    // }
     // $(document).on("click", ".playAgainBtn", restart);
 
     // function restart() {
@@ -88,36 +96,34 @@ var intervalId;
         $("#question").html('<h2>' + game[questionNum].question + '</h2>');
         for (var i = 0; i < 4; i++) {
             var b = $("<input type='radio' name='optionBtn' value=" + game[questionNum].options[i] + ">" + game[questionNum].options[i] + "</input>");
-            b.attr({"data-index": i});
+            b.attr({ "data-index": i });
             console.log(b);
             $("#choices").append(b);
         }
         optionBtn();
-    };
+    }
 
     function optionBtn() {
         $("input[name=optionBtn]").click(function () {
             answered = true;
             $("input[name=optionBtn").attr("disabled", "disabled");
             userChoice = $(this).data("index");
-            // var correctAnswer = game[questionNum].answer
+            var correctAnswer = game[questionNum].answer
             console.log("User Choice: " + userChoice);
             console.log("Answer: " + correctAnswer);
 
             if (userChoice === correctAnswer && answered === true) {
                 correct++;
-                // answered = false;
                 answerPage();
-                answered = false;
+                answered = false; 
             }
             else if (userChoice !== correctAnswer && answered === true) {
                 incorrect++;
-                // answered = false;
                 answerPage();
                 answered = false;
             }
         })
-    };
+    }
 
     function answerPage() {
         $("#timer").hide();
@@ -173,5 +179,4 @@ var intervalId;
         // playAgain.text("Play Again");
         // $("#playAgain").append(playAgain);
     }
-
 });
