@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var time = 15;
+    var time = 5;
 
     var game = [{
         question: "Where do the Flintstones live?",
@@ -49,13 +49,21 @@ $(document).ready(function () {
         questions();
     }
 
-    // function reset () {
-    //     clearInterval(intervalId);
-    //     intervalId = setInterval(function () {
-    //         time--
-    //     })
-    //     questions();
-    // }
+    function reset () {
+        clearInterval(intervalId);
+        $("#timer").empty();
+        time = 5;
+        $("#timer").text("Time Remaining: " + time);
+        intervalId = setInterval(function () {
+            time--
+            $("#timer").text("Time Remaining: " + time);
+            if (time === 0) {
+                clearInterval(intervalId);
+                answerPage();
+            }
+        },1000);
+        questions();
+    }
     // $(document).on("click", ".playAgainBtn", restart);
 
     // function restart() {
@@ -68,21 +76,6 @@ $(document).ready(function () {
     //     time = 15;
     //     // answered = false;
     //     start();
-    // };
-
-    // function timeConverter(t) {
-    //     var minutes = Math.floor(t / 60);
-    //     var seconds = t - (minutes * 60);
-    //     if (seconds < 10) {
-    //         seconds = "0" + seconds;
-    //     }
-    //     if (minutes === 0) {
-    //         minutes = "00";
-    //     }
-    //     else if (minutes < 10) {
-    //         minutes = "0" + minutes;
-    //     }
-    //     return minutes + ":" + seconds;
     // };
 
     function questions() {
@@ -138,13 +131,17 @@ $(document).ready(function () {
 
         if (userChoice === correctAnswer && answered === true) {
             $("#message").text("Correct!");
+            answered = false;
         }
         else if (userChoice !== correctAnswer && answered === true) {
-            $("#message").text("Incorrect! The answer was " + correctAnswerText);
+            $("#message").text("Incorrect! The answer was " + correctAnswerText + ".");
+            answered = false;
         }
         else {
-            $("#message").text("Time's up!");
-        } nextQuestion();
+            $("#message").text("Time's up! The answer was " + correctAnswerText + ".");
+            answered = false;
+        }
+        nextQuestion();
     }
 
     function nextQuestion() {
@@ -153,7 +150,7 @@ $(document).ready(function () {
         }
         else {
             questionNum++;
-            setTimeout(timer, 2000);
+            setTimeout(reset, 2000);
         }
     }
 
@@ -162,13 +159,18 @@ $(document).ready(function () {
             unanswered++;
         }
         answered = false;
-        $("#result").empty();
-        $("#result").show();
-        $("#timer").html("<h2> Time's up!</h2>");
+        $("#timer").empty();
+        $("questionNum").hide();
         $("#question").hide();
         $("#choices").hide();
         $("#message").hide();
-        $("#playAgain").empty();
+        $("#correctAnswer").hide();
+        $("#result").empty();
+        $("#result").show();
+        // $("#timer").show();
+        // $("#timer").html("<h2> Game Over!</h2>");
+        // $("#playAgain").empty();
+        $("#result").html("<p> Game Over! </p>");
         $("#result").append("<p> Correct Answers = " + correct + "</p");
         $("#result").append("<p> Incorrect Answers = " + incorrect + "</p>");
         $("#result").append("<p> Unanswered = " + unanswered + "</p>");
